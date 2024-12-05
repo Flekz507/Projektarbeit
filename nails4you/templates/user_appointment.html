@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <br><br>
+            <h3>Deine gebuchten Termine:</h3>
+            {% for appointment in appointments %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                       <strong> Termin am {{ appointment.date }} um {{ appointment.time }} </strong>
+                    </div>
+                    <div class="card-body">
+                        <strong><p>Service: {{ appointment.service }}</p></strong>
+                        
+                        <form method="POST" action="{% url 'user_appointment' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                            
+                            {{ form.as_p }}
+                            
+                            <button type="submit" class="btn btn-success">Änderung speichern</button>
+                        </form>
+
+                        <form method="POST" action="{% url 'user_appointment' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete_appointment_id" value="{{ appointment.id }}">
+                            <button type="submit" class="btn btn-danger">Löschen</button>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Keine Termine gefunden.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

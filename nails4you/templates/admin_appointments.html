@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <center> 
+        <div class="col-8">
+            <br><br>
+            <h3>Termine verwalten</h3>
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Uhrzeit</th>
+                        <th scope="col">Kunde</th>
+                        <th scope="col">Kunden-Email</th>
+                        <th scope="col">Service</th>
+                        <th scope="col">Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.time }}</td>
+                        <td>{{ appointment.user.username }}</td>
+                        <td>{{ appointment.user.email }}</td>
+                        <td>{{ appointment.service }}</td>
+                        <td>
+                            <!-- Bearbeiten-Link -->
+                            <a href="{% url 'admin_appointments' appointment.id %}" class="btn btn-sm btn-warning">Bearbeiten</a>
+                            
+                            <!-- Löschen-Formular -->
+                            <form method="POST" action="{% url 'admin_appointments' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="delete_appointment_id" value="{{ appointment.id }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Bearbeitungsformular, falls ein Termin zum Bearbeiten ausgewählt wurde -->
+            {% if appointment_to_edit %}
+            <h4>Termin bearbeiten</h4>
+            <form method="POST" action="{% url 'admin_appointments' appointment_to_edit.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Änderung speichern</button>
+                <a href="{% url 'admin_appointments' %}" class="btn btn-secondary">Abbrechen</a>
+            </form>
+            {% endif %}
+            <br><br>
+        </div>
+    </center>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container container-fluid px-4 px-lg-5">
+        <a class="navbar-brand" href="{% url 'index' %}">Nails 4 You</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'search' %}">Suchen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'shop' %}">Alle Produkte</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{%  url 'category' 'Gutschein' %}">Gutschein</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Nagellack' %}">Nagellack</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Parfum' %}">Parfum</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Geräte' %}">Geräte</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'preview' %}">Virtual Try On</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'book_appointment' %}">Termin buchen</a>
+                </li>
+
+                {% if user.is_authenticated %}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profil verwalten</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'update_user' %}">Benutzer Profil</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'update_info' %}">Benutzer Info</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'user_appointment' %}">Benutzer Termine</a></li>
+                    </ul>
+                </li>
+
+                {% if user.is_superuser %}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin Verwaltung</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">Versendete Bestellungen</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'not_shipped_dash' %}">Nicht versendete Bestellungen</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'admin_appointments' %}">Termine</a></li>
+                    </ul>
+                </li>
+
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Registrieren</a>
+                </li>
+                {% endif %}
+            </ul>
+            <form class="d-flex">
+                <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark"><i class="bi-cart-fill me-1"></i>
+                    Warenkorb
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span></a>
+            </form>
+        </div>
+    </div>
+</nav>

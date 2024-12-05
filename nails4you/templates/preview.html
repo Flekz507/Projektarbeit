@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+    {% load static %}
+    {% block content %}
+      <div class="preview-container">
+        <div class="button-group">
+          <button class="model-button btn btn-outline-secondary mb-2" onclick="document.getElementById('modelSelector').value='{% static 'models/fingernail1.glb' %}'; document.getElementById('modelSelector').dispatchEvent(new Event('change'));">Modell 1: Weiss Lang</button>
+          <button class="model-button btn btn-outline-danger mb-2" onclick="document.getElementById('modelSelector').value='{% static 'models/fingernail2.glb' %}'; document.getElementById('modelSelector').dispatchEvent(new Event('change'));">Modell 2: Rot Lang</button>
+          <button class="model-button btn btn-outline-primary mb-2" onclick="document.getElementById('modelSelector').value='{% static 'models/fingernail3.glb' %}'; document.getElementById('modelSelector').dispatchEvent(new Event('change'));">Modell 3: Blau Kurz</button>
+        </div>
+        <div class="camera-view">
+          <video id="videoInput" autoplay playsinline style="display: none;"></video>
+          <canvas id="canvasOutput"></canvas>
+        </div>
+      </div>
+
+      <!-- Verstecktes Auswahlmenü für die Kompatibilität mit dem Script -->
+      <select id="modelSelector" style="display: none;">
+        <option value="{% static 'models/fingernail1.glb' %}">Modell 1: Weiss Lang</option>
+        <option value="{% static 'models/fingernail2.glb' %}">Modell 2: Rot Lang</option>
+        <option value="{% static 'models/fingernail3.glb' %}">Modell 3: Blau Kurz</option>
+      </select>
+      <br><br><br><br>
+    {% endblock %}

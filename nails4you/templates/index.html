@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+        <!-- Section-->
+        {% block content %}
+        <div class="container">
+            <div class="welcome">
+              <div class="text-center">
+                  <h1>Herzlich Willkommen bei Nails 4 You!</h1>
+                  <p class="lead mt-4">
+                      Schön, dass Sie da sind! Bei Nails 4 You stehen Ihre Schönheit und Ihr Wohlbefinden im Mittelpunkt.
+                      Lassen Sie sich von unserer Leidenschaft für stilvolle, gepflegte Nägel inspirieren. Ob klassische Maniküre,
+                      trendige Nailart oder individuelle Designs – bei uns finden Sie alles, was Ihr Herz begehrt.
+                  </p>
+                  <p class="lead mt-4">
+                      Wir laden Sie ein, unsere Angebote und Services kennenzulernen und sich von unserer Expertise überzeugen zu lassen.
+                      Besuchen Sie unser Studio, und genießen Sie eine entspannende Auszeit in einer angenehmen Atmosphäre.
+                      Ihr perfekter Nagel-Look ist nur einen Klick entfernt!
+                  </p>
+                  <br>
+                  <p class="lead mt-4">
+                      Entdecken Sie auch unsere <strong>Virtual Try On</strong> Vorschau, bei der Sie verschiedene Nageldesigns
+                      direkt an Ihren Fingern simulieren können. Probieren Sie unterschiedliche Farben und Längen aus und finden Sie Ihren
+                      perfekten Stil – ganz bequem von zu Hause aus!
+                  </p>
+                  <a href="{% url 'preview' %}" class="btn btn-secondary mt-4">Jetzt Vorschau starten</a>
+                  <a href="{% url 'book_appointment' %}" class="btn btn-primary mt-4 ms-2">Jetzt Termin buchen</a>
+              </div>
+            </div>
+          </div>
+          {% endblock content %}

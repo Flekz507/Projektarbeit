@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <br><br>
+            <h3>Termin buchen</h3>
+            <div class="card">
+                <div class="card-header">
+                  Deine Daten
+                </div>
+                <div class="card-body">
+                  Nutzername:   {{ user.username }}<br/>
+                  Vorname:      {{ user.first_name }}<br/>
+                  Nachname:     {{ user.last_name }}<br/>
+                  Email:        {{ user.email }}<br/>
+                
+                </div>
+                <br>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">Termin buchen</button>
+                </form>
+            </div>
+            <br>
+            
+            <br><br>
+        </div>
+    </div>
+</div>
+                {% endblock %}
