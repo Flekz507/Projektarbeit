@@ -18,24 +18,20 @@ class ShippingAddress(models.Model):
 	shipping_country = models.CharField(max_length=255)
 
 
-	# Don't pluralize address
 	class Meta:
 		verbose_name_plural = "Shipping Address"
 
 	def __str__(self):
 		return f'Shipping Address - {str(self.id)}'
 	
-	#create a Shipping Address by default when signs up
+	#bei der Anmeldung standardmäßig eine Versandadresse erstellen
 	def create_shipping(sender, instance, created, **kwargs):
 		if created:
 			user_shipping = ShippingAddress(user=instance)
 			user_shipping.save()
-    #automate profile
 	post_save.connect(create_shipping, sender=User)
 	
-# Create Order Model
 class Order(models.Model):
-	# Foreign Key
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 	full_name = models.CharField(max_length=250)
 	email = models.EmailField(max_length=250)
@@ -44,14 +40,14 @@ class Order(models.Model):
 	date_ordered = models.DateTimeField(auto_now_add=True)	
 	shipped = models.BooleanField(default=False)
 	date_shipped = models.DateTimeField(blank=True, null=True)
-	# payapal invoice and paid T/F
+	# payapal invoice paid T/F
 	invoice = models.CharField(max_length=250, null=True, blank=True)
 	paid = models.BooleanField(default=False)
 	
 	def __str__(self):
 		return f'Order - {str(self.id)}'
 	
-# Auto Add shipping Date
+# Versanddatum automatisch hinzufügen
 @receiver(pre_save, sender=Order)
 def set_shipped_date_on_update(sender, instance, **kwargs):
 	if instance.pk:
@@ -60,9 +56,7 @@ def set_shipped_date_on_update(sender, instance, **kwargs):
 		if instance.shipped and not obj.shipped:
 			instance.date_shipped = now
 	
-# Create Order Items Model
 class OrderItem(models.Model):
-	# Foreign Keys
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
