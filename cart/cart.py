@@ -6,12 +6,12 @@ class Cart():
         self.request = request
         cart = self.session.get('session_key')
 
-		# If the user is new, no session key!  Create one!
+		# Wenn der Benutzer neu ist, kein Sitzungsschlüssel. Neu erstellen
         if 'session_key' not in request.session:
             cart = self.session['session_key'] = {}
 
 
-		# Make sure cart is available on all pages of site
+		# Warenkorb auf allen Seiten verfügbar
         self.cart = cart
 
     def db_add(self, product, quantity):
@@ -26,14 +26,12 @@ class Cart():
 
         self.session.modified = True
 
-		# Deal with logged in user
+		# Eingeloggte User
         if self.request.user.is_authenticated:
-			# Get the current user profile
             current_user = Profile.objects.filter(user__id=self.request.user.id)
 
             carty = str(self.cart)
             carty = carty.replace("\'", "\"")
-			# Save carty to the Profile Model
             current_user.update(old_cart=str(carty))
     
     def add(self, product, quantity):
@@ -48,14 +46,12 @@ class Cart():
 
         self.session.modified = True
 
-		# Deal with logged in user
+		# Eingeloggte User
         if self.request.user.is_authenticated:
-			# Get the current user profile
             current_user = Profile.objects.filter(user__id=self.request.user.id)
 
             carty = str(self.cart)
             carty = carty.replace("\'", "\"")
-			# Save carty to the Profile Model
             current_user.update(old_cart=str(carty))
 
     def cart_total(self):
@@ -104,14 +100,11 @@ class Cart():
         self.session.modified = True
 	
 
-		# Deal with logged in user
         if self.request.user.is_authenticated:
-			# Get the current user profile
             current_user = Profile.objects.filter(user__id=self.request.user.id)
 
             carty = str(self.cart)
             carty = carty.replace("\'", "\"")
-			# Save carty to the Profile Model
             current_user.update(old_cart=str(carty))
 
 
@@ -126,9 +119,7 @@ class Cart():
 
         self.session.modified = True
 
-		# Deal with logged in user
         if self.request.user.is_authenticated:
-			# Get the current user profile
             current_user = Profile.objects.filter(user__id=self.request.user.id)
 
             carty = str(self.cart)
