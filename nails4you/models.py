@@ -20,12 +20,12 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
     
-    #create user profile by default when signs up
+    #Standardmäßig ein Benutzerprofil erstellen, wenn Sie sich anmelden
     def create_profile(sender, instance, created, **kwargs):
         if created:
             user_profile = Profile(user=instance)
             user_profile.save()
-    #automate profile
+    #Profil automatisieren
     post_save.connect(create_profile, sender=User)
 
 
