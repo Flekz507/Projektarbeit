@@ -17,7 +17,7 @@ from .forms import AppointmentForm
 from .models import Appointment
 
 def search(request):
-	# Feststellen, ob sie das Formular ausgefüllt haben
+	# Formular ausgefüllt?
 	if request.method == "POST":
 		searched = request.POST['searched']
 		# Abfrage des DB-Modells Produkte
