@@ -36,7 +36,7 @@ class ChangePasswordForm(SetPasswordForm):
 		self.fields['new_password2'].help_text = '<span class="form-text text-muted"><small>Geben sie das gleiche Passwort ein.</small></span>'
 
 class UpdateUserForm(UserChangeForm):
-	#Hide password
+	#Passwort verstecken
 	password = None
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email-Adresse'}), required=False)
 	first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Vorname'}), required=False)
