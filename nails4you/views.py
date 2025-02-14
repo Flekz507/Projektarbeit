@@ -17,12 +17,11 @@ from .forms import AppointmentForm
 from .models import Appointment
 
 def search(request):
-	# Determine if they filled out the form
+	# Feststellen, ob sie das Formular ausgefüllt haben
 	if request.method == "POST":
 		searched = request.POST['searched']
-		# Query The Products DB Model
+		# Abfrage des DB-Modells Produkte
 		searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
-		# Test for null
 		if not searched:
 			messages.success(request, "Diese Produkt schein nicht zu existieren...versuche es nochmal.")
 			return render(request, "search.html", {})
@@ -33,19 +32,19 @@ def search(request):
 
 def update_info(request):
 	if request.user.is_authenticated:
-		# Get Current User
+		# Aktuellen Benutzer abrufen
 		current_user = Profile.objects.get(user__id=request.user.id)
-		# Get Current User's Shipping Info
+		# Versandinformationen des aktuellen Benutzers abrufen
 		shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
 		
-		# Get original User Form
+		# Original-Benutzerformular abrufen
 		form = UserInfoForm(request.POST or None, instance=current_user)
-		# Get User's Shipping Form
+		# Versandformular des Benutzers abrufen
 		shipping_form = ShippingForm(request.POST or None, instance=shipping_user)		
 		if form.is_valid() or shipping_form.is_valid():
-			# Save original form
+			# Originalformular speichern
 			form.save()
-			# Save shipping form
+			# Versandformular speichern
 			shipping_form.save()
 
 			messages.success(request, "Deine Informationen wurden geändert!!")
@@ -58,10 +57,8 @@ def update_info(request):
 def update_password(request):
 	if request.user.is_authenticated:
 		current_user = request.user
-		# Did they fill out the form
 		if request.method  == 'POST':
 			form = ChangePasswordForm(current_user, request.POST)
-			# Is the form valid
 			if form.is_valid():
 				form.save()
 				messages.success(request, "Password geändert...")
@@ -103,9 +100,7 @@ def category_summary(request):
     return render(request, 'category_summary.html', {'categories':categories})
 
 def category(request, foo):
-    #replace hyphens with spaces
     foo = foo.replace('-', ' ')
-    #grab the category from the url
     try:
         category = Category.objects.get(name=foo)
         products = Product.objects.filter(category=category)
@@ -144,18 +139,12 @@ def login_user(request):
 		if user is not None:
 			login(request, user)
 
-			# Do some shopping cart stuff
 			current_user = Profile.objects.get(user__id=request.user.id)
-			# Get their saved cart from database
 			saved_cart = current_user.old_cart
-			# Convert database string to python dictionary
 			if saved_cart:
-				# Convert to dictionary using JSON
 				converted_cart = json.loads(saved_cart)
-				# Add the loaded cart dictionary to our session
-				# Get the cart
+
 				cart = Cart(request)
-				# Loop thru the cart and add the items from the database
 				for key,value in converted_cart.items():
 					cart.db_add(product=key, quantity=value)
 
