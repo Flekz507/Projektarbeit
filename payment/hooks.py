@@ -7,21 +7,17 @@ from .models import Order
 
 @receiver(valid_ipn_received)
 def paypal_payment_received(sender, **kwargs):
-    #add a ten second pause for paypal to send ipn data
+    #Hinzufügen einer zehnsekündigen Pause, damit Paypal ipn-Daten senden kann
     time.sleep(10)
-    #grab the info that paypal sends
+    #die von Paypal gesendeten Informationen abrufen
     paypal_obj = sender
-    #grab the invoice
+    #Rechnung
     my_Invoice = str(paypal_obj.invoice)
 
-    #match the paypal invoice to the order invoice
-    #look up the order
+    #die Paypal-Rechnung mit der Bestellrechnung abgleichen
     my_Order = Order.objects.get(invoice=my_Invoice)
 
-    #record the order was paid
+    #Aufzeichnung der Bezahlung der Bestellung
     my_Order.paid = True
-    #save the order
+    #den Auftrag speichern
     my_Order.save()
-
-    #print(paypal_obj)
-    #print(f'Amout Paid: {paypal_obj.mc_gross}')
