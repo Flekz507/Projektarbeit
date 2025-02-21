@@ -10,7 +10,7 @@ let videoTexture;
 
 initThreeJS();
 setupVideoTexture();
-loadFingernailModel(modelSelector.value); // Initiales Laden des ersten Modells
+loadFingernailModel(modelSelector.value);
 
 // Event Listener für das Auswahlmenü
 modelSelector.addEventListener('change', function () {
@@ -61,11 +61,10 @@ function loadFingernailModel(modelPath) {
   loader.load(modelPath, function (gltf) {
     fingernailModel = gltf.scene;
 
-    // Materialien überschreiben (falls notwendig)
+    // Materialien überschreiben
     fingernailModel.traverse((node) => {
       if (node.isMesh) {
         node.geometry.center(); // Zentriert die Geometrie
-        // Optional: Materialien anpassen
         // node.material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
       }
     });
@@ -138,7 +137,7 @@ function computeScaleFromZ(z) {
   const minScale = 0.9;
   const maxScale = 9;
 
-  // Definiere den Bereich der z-Werte, z.B. z zwischen 0 und 0.5
+  // Definiere den Bereich der z-Werte zwischen 0 und 0.5
   const zMin = 0;   // Hand sehr nah an der Kamera
   const zMax = 0.5; // Hand weiter von der Kamera entfernt
 
